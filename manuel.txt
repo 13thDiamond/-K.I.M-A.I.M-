@@ -1,0 +1,20 @@
+Here you can find a small intruduction for [K.I.M] / [A.I.M]
+
+Befor you start! You have to install this following Modules:
+-pynput
+-keyboard
+-pyautogui
+
+Controll:
+
+s = stats [K.I.M] / [A.I.M]
+p = pause [K.I.M] / [A.I.M]
+r = resume [K.I.M] / [A.I.M]
+esc = stops/ ends [K.I.M] / [A.I.M]
+(following keys)
+
+ADVICE!!!
+
+-Sometimes [K.I.M] / [A.I.M] stops working but is still running wothout a error code. Just press "p" and after "r" than it will run normal.
+-Also at this current state it will crash if you try to "restart" [K.I.M] / [A.I.M] with the "s"-key. It will think that you try to start the operation agian what leads to
+a Crash of [K.I.M] / [A.I.M].
