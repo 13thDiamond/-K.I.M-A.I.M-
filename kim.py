@@ -9,10 +9,9 @@ class Kim(threading.Thread):
         self.paused = False
         self.pause_condition = threading.Condition(threading.Lock())
         self.movements = [
-            {"x": 0, "y": -50},  # Bewege den Cursor nach oben
-            {"x": 50, "y": 0},   # Bewege den Cursor nach rechts
-            {"x": -50, "y": 0},   # Bewege den Cursor nach links
-            {"x": 0, "y": 50},   # Bewege den Cursor nach unten
+            [{"x": 0, "y": -50}, {"x": 50, "y": 0}, {"x": -50, "y": 0}, {"x": 0, "y": 50}], #List 1
+            [{"x": 0, "y": 50}, {"x": -50, "y": 0}, {"x": 50, "y": 0}, {"x": 0, "y": -50}], #List 2
+            #[{"x: 0, "y": 0}, {"x: 0, "y": 0}],....Enter another movmentlist....
         ]
 
     def run(self):
@@ -22,7 +21,8 @@ class Kim(threading.Thread):
                     self.pause_condition.wait()
 
                 for movement in self.movements:
-                    self.move_mouse(movement["x"], movement["y"])
+                    for koord in movement:
+                        self.move_mouse(koord["x"], koord["y"])
 
             time.sleep(5) #in sec| Default for purpose '90'
 
@@ -45,3 +45,8 @@ class Kim(threading.Thread):
 
     def stop(self):
         print("\n[KIM] Stops {x_x}")
+
+# Bewege den Cursor nach oben
+# Bewege den Cursor nach rechts
+# Bewege den Cursor nach links
+# Bewege den Cursor nach unten
