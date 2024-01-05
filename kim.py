@@ -2,17 +2,22 @@ import threading
 import time
 import pyautogui
 import sys
+import random
 
 class Kim(threading.Thread):
     def __init__(self):
         super().__init__(daemon=True)
         self.paused = False
         self.pause_condition = threading.Condition(threading.Lock())
-        self.movements = [
-            [{"x": 0, "y": -50}, {"x": 50, "y": 0}, {"x": -50, "y": 0}, {"x": 0, "y": 50}], #List 1
-            [{"x": 0, "y": 50}, {"x": -50, "y": 0}, {"x": 50, "y": 0}, {"x": 0, "y": -50}], #List 2
-            #[{"x: 0, "y": 0}, {"x: 0, "y": 0}],....Enter another movmentlist....
-        ]
+        self.mlists = self.create_mlists()
+        
+        
+    def create_mlists(self):
+        mlist_1 = [{"x": 0, "y": -50}, {"x": 50, "y": 0}, {"x": -50, "y": 0}, {"x": 0, "y": 50}]
+        mlist_2 = [{"x": 0, "y": 50}, {"x": -50, "y": 0}, {"x": 50, "y": 0}, {"x": 0, "y": -50}]
+        #mlist_X = [{"x: 0, "y": 0}, {"x: 0, "y": 0}]
+
+        return [mlist_1, mlist_2]
 
     def run(self):
         while True:
@@ -20,9 +25,14 @@ class Kim(threading.Thread):
                 while self.paused:
                     self.pause_condition.wait()
 
-                for movement in self.movements:
-                    for koord in movement:
-                        self.move_mouse(koord["x"], koord["y"])
+                selected_movement = random.choice(self.mlists)
+                
+                for koord in selected_movement:
+                    self.move_mouse(koord["x"], koord["y"])
+                #smooth mice flow.
+                time.sleep(1)
+
+                self.mlists = self.create_mlists()
 
             time.sleep(5) #in sec| Default for purpose '90'
 
