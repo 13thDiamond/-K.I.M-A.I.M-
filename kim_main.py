@@ -5,6 +5,7 @@ from kim import Kim
 
 
 kim = Kim()
+clock = time.asctime() #Gives actuall time back
 
 def on_press(key):
     try:
@@ -16,6 +17,7 @@ def on_press(key):
         
         if char == 's':
             kim.start()
+            print("\n",clock.center(50))
             print("\n[KIM] Is running {°o°}")
         
         elif char == 'p':
