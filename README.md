@@ -1,7 +1,7 @@
 # -K.I.M-A.I.M-
 [K.I.M] / [A.I.M] | Künstliche.Intelligente.Maus / Artificial.Intelligence.Mouse
 
-Original KIM is a small fun project. I use it for generall learning purposes.
+K.I.M is a small fun project. I use it for generall learning purposes.
 
 
 # Upcoming Features
