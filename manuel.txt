@@ -1,6 +1,6 @@
 Here you can find a small intruduction for [K.I.M] / [A.I.M]
 
-Befor you start! You have to install this following Modules:
+Befor you start! You have to install the following Modules(Win/Mac):
 -pynput
 -keyboard
 -pyautogui
