@@ -50,6 +50,7 @@ def on_press(key):
             print("\n[KIM] Says Goodbye see ya {^_^}")
             print(f"\nIt´s {iso_hour}:{iso_minute} o´clock.".center(50))
             kim.clean_exit()
+            listner.stop() #stops the keayboard-listener
             sys.exit()
             
     except AttributeError:
@@ -59,4 +60,4 @@ def on_press(key):
 with keyboard.Listener(on_press=on_press) as listener:
     listener.join()
 
-print("Thread Status:", kim.is_alive())
+print("Thread Status:", listener.is_alive()) #checks keyboard-listener / Ture = processin | False = no processing
