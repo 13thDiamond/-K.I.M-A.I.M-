@@ -1,8 +1,8 @@
 import sys
-import time
+from datetime import datetime
 from pynput import keyboard
 from kim import Kim
-from datetime_utils import clock, calender, iso_8601_t, iso_8601_c
+
 
               #USE#
 #-------------------------------#
@@ -10,22 +10,15 @@ from datetime_utils import clock, calender, iso_8601_t, iso_8601_c
 #--calls functions from kim-----#    
 kim = Kim()
 
-#--calls actual date and time---#
-#--calls format for date and time--#
-hour_now = clock.hour()
-minute_now = clock.minute()
-second_now = clock.second()
 
-day_today = calender.day()
-month_today = calender.month()
-year_today = calender.year()
-
-iso_hour, iso_minute = iso_8601_t(hour_now, minute_now)
-iso_date = iso_8601_c(day_today, month_today, year_today)
+#-------------------------------#
+def get_formatted_time(): #function for dynamic time registration
+    now = datetime.now()
+    return now.strftime("%H:%M")
 #-------------------------------#
 
-
 def on_press(key):
+    global listener
     try:
         char = None
         if hasattr(key, 'char'):
@@ -35,22 +28,25 @@ def on_press(key):
         
         if char == 's':
             kim.start()
-            print(f"\nIt´s {iso_hour}:{iso_minute} o´clock.".center(50))
-            print("\n[KIM] Is running {°o°}")
+            start_time = get_formatted_time()
+            print("\n[KIM] Is running {°o°}" f" at : {start_time}")
         
         elif char == 'p':
             kim.pause()
-            print("\n[KIM] Is resting {≠,≠}")
+            resting_time = get_formatted_time()
+            print("\n[KIM] Is resting {≠,≠}" f": {resting_time}")
         
         elif char == 'r':
             kim.resume()
-            print("\n[KIM] Is running agian {°o°}")
+            rerunn_time = get_formatted_time()
+            print("\n[KIM] Is running agian {°o°}" f": {rerunn_time}")
         
         elif key == keyboard.Key.esc:
-            print("\n[KIM] Says Goodbye see ya {^_^}")
-            print(f"\nIt´s {iso_hour}:{iso_minute} o´clock.".center(50))
+            end_time = get_formatted_time()
+            print("\n[KIM] Says Goodbye see ya {^_^}" f" at: {end_time}")
+            
             kim.clean_exit()
-            listner.stop() #stops the keayboard-listener
+            listener.stop() #stops the keayboard-listener
             sys.exit()
             
     except AttributeError:
@@ -60,4 +56,7 @@ def on_press(key):
 with keyboard.Listener(on_press=on_press) as listener:
     listener.join()
 
-print("Thread Status:", listener.is_alive()) #checks keyboard-listener / Ture = processin | False = no processing
+
+#--Status Tracker--#
+#print("Thread Status:", listener.is_alive()) #checks keyboard-listener / Ture = processin | False = no processing
+#------------------#
