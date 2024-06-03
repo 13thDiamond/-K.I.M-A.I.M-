@@ -8,8 +8,10 @@ class Kim(threading.Thread):
     def __init__(self):
         super().__init__(daemon=True)
         self.paused = False
+        self.running = True
         self.pause_condition = threading.Condition(threading.Lock())
         self.mlists = self.create_mlists()
+        
         
         
     def create_mlists(self):
@@ -20,7 +22,7 @@ class Kim(threading.Thread):
         return [mlist_1, mlist_2]
 
     def run(self):
-        while True:
+        while self.running:
             with self.pause_condition:
                 while self.paused:
                     self.pause_condition.wait()
@@ -37,13 +39,13 @@ class Kim(threading.Thread):
             time.sleep(5) #in sec| Default for purpose '90'
 
     def pause(self):
-        self.paused = True
-        self.pause_condition.acquire()
+        with self.pause_condition:
+            self.paused = True
 
     def resume(self):
-        self.paused = False
-        self.pause_condition.notify()
-        self.pause_condition.release()
+        with self.pause_condition:
+            self.paused = False
+            self.pause_condition.notify()
 
     def move_mouse(self, x, y):
         current_x, current_y = pyautogui.position()
@@ -51,10 +53,19 @@ class Kim(threading.Thread):
         pyautogui.moveTo(new_x, new_y)
 
     def clean_exit(self):
-        sys.exit()
+        self.running = False
+        with self.pause_condition:
+            self.pause_condition.notify() # Ensure thread can exit if paused
+
+    
+    def is_running(self):
+        return not self.paused and self.running
 
     def stop(self):
+        self.clean_exit()
         print("\n[KIM] Stops {x_x}")
+
+
 
 # Bewege den Cursor nach oben
 # Bewege den Cursor nach rechts
