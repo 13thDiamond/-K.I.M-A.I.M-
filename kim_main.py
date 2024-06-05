@@ -67,20 +67,24 @@ def main():
     while True:
         stop_event = threading.Event()
         run_kim_program(stop_event)
-        user_input = input("\nTo quit K.I.M write 'yes' and confirm with enter\n"
-              "To restart K.I.M write 'restart' and confirm with enter.\n").strip().lower()
         
-
+        while True:
+            user_input = input("\nTo quit K.I.M write 'yes' and confirm with enter\n"
+              "To restart K.I.M write 'restart' and confirm with enter.\n").strip().lower()
+            
+            if user_input in ['yes','restart']:
+                break
+            end_time = get_formatted_time()
+            print("\nUndifined input. Application shut down!" f" at:{end_time}")
+            break
+            
         if user_input == 'yes':
             end_time = get_formatted_time()
-            print("\n KIM shuts down!" f"{end_time}")
+            print("\nKIM shuts down!" f" at:{end_time}")
             break
         elif user_input == 'restart':
-            print("\n KIM is restarting!")
-        else:
-            end_time = get_formatted_time()
-            print("\n Undifined input. Application shut down!" f"at {end_time}")
-            break
+            print("\nKIM is restarting!")
+
 
 if __name__ == "__main__":
     main()
